@@ -1,67 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BikeMasters - Sua Loja de Bicicletas</title>
+    <title>BikeShop - A sua loja de bicicletas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <header>
-        <h1>🚴 BikeMasters</h1>
-        <nav>
-            <a href="#destaques">Destaques</a>
-            <a href="#produtos">Bicicletas</a>
-            <a href="#contato">Contato</a>
-            <a href="#" id="carrinho-btn">🛒 Carrinho (<span id="contador-carrinho">0</span>)</a>
-        </nav>
+        <h1>BikeShop</h1>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 Carrinho (<span id="cart-count">0</span>)
+        </div>
     </header>
 
     <main>
-        <section id="banner" class="hero">
-            <h2>A Aventura Começa Aqui!</h2>
-            <p>Encontre a bicicleta perfeita para sua próxima trilha ou pedalada urbana.</p>
-            <a href="#produtos" class="btn-cta">Ver Bicicletas</a>
-        </section>
-
-        <section id="produtos">
-            <h2>Nossas Bicicletas</h2>
-            <div id="lista-produtos" class="produtos-grid">
-                
-                <div class="produto">
-                    <img src="mtb.jpg" alt="Mountain Bike Profissional">
-                    <h3>Mountain Bike Pro X9</h3>
-                    <p class="caracteristicas">Suspensão total, Aro 29, 21 marchas.</p>
-                    <p class="preco">R$ 2.999,90</p>
-                    <button class="adicionar-carrinho" data-id="1" data-nome="MTB Pro X9">Adicionar ao Carrinho</button>
-                </div>
-
-                <div class="produto">
-                    <img src="urbana.jpg" alt="Bicicleta Urbana Vintage">
-                    <h3>City Bike Classic</h3>
-                    <p class="caracteristicas">Câmbio de 7 marchas, Cesta dianteira, Freio V-Brake.</p>
-                    <p class="preco">R$ 1.450,00</p>
-                    <button class="adicionar-carrinho" data-id="2" data-nome="City Bike Classic">Adicionar ao Carrinho</button>
-                </div>
-
-                <div class="produto">
-                    <img src="speed.jpg" alt="Bicicleta Speed de Estrada">
-                    <h3>Road Max R3</h3>
-                    <p class="caracteristicas">Quadro em alumínio, Pneus finos, Câmbio Shimano.</p>
-                    <p class="preco">R$ 4.890,00</p>
-                    <button class="adicionar-carrinho" data-id="3" data-nome="Road Max R3">Adicionar ao Carrinho</button>
-                </div>
-
-            </div>
-        </section>
+        <h2>Nossas Bicicletas</h2>
+        <section id="product-list" class="product-list">
+            </section>
     </main>
 
-    <footer id="contato">
-        <h3>BikeMasters</h3>
-        <p>A loja do ciclista. Qualidade e Aventura.</p>
-        <p>Email: contato@bikemasters.com | Telefone: (99) 99999-9999</p>
-        <p>&copy; 2024 BikeMasters. Todos os direitos reservados.</p>
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <h3>Seu Carrinho</h3>
+            <span class="close-btn" onclick="toggleCart()">X</span>
+        </div>
+        <div id="cart-items">
+            </div>
+        <div class="cart-footer">
+            <p>Total: R$ <span id="cart-total">0.00</span></p>
+            <button>Finalizar Compra</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BikeShop</p>
     </footer>
 
     <script src="script.js"></script>
