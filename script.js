@@ -1,116 +1,71 @@
-// Catálogo de Produtos
-const products = [
-    { id: 1, name: "Mountain Bike Extreme", price: 1800.00, image: "bike-mtb.jpg" },
-    { id: 2, name: "Speed Racer Pro", price: 2500.00, image: "bike-speed.jpg" },
-    { id: 3, name: "City Comfort", price: 1200.00, image: "bike-city.jpg" },
-    // Adicione mais produtos conforme necessário
+// Dados das Motocicletas
+const motos = [
+    { id: 101, nome: "Esportiva GT 1000", preco: 45000.00, imagem: "https://via.placeholder.com/350x200?text=Moto+Esportiva" },
+    { id: 102, nome: "Custom Cruiser 850", preco: 38500.00, imagem: "https://via.placeholder.com/350x200?text=Moto+Custom" },
+    { id: 103, nome: "Trail Aventura XA", preco: 28990.00, imagem: "https://via.placeholder.com/350x200?text=Moto+Trail" },
+    { id: 104, nome: "Urbana Commuter 150", preco: 12500.00, imagem: "https://via.placeholder.com/350x200?text=Moto+Urbana" }
 ];
 
-let cart = []; // Array para armazenar os itens do carrinho
+// Carrinho de Compras (simples lista de interesse neste exemplo)
+let carrinho = [];
 
-// Seletores do DOM
-const productList = document.getElementById('product-list');
-const cartCountSpan = document.getElementById('cart-count');
-const cartItemsContainer = document.getElementById('cart-items');
-const cartTotalSpan = document.getElementById('cart-total');
-const cartPopup = document.getElementById('cart-popup');
+// Elementos do DOM
+const listaProdutos = document.getElementById('lista-produtos');
+const contadorCarrinho = document.getElementById('contador-carrinho');
+const totalCarrinho = document.getElementById('total-carrinho');
 
-/**
- * Renderiza todos os produtos na página.
- */
-function renderProducts() {
-    productList.innerHTML = ''; // Limpa a lista antes de renderizar
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p class="price">R$ ${product.price.toFixed(2)}</p>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Adicionar ao Carrinho</button>
+// Função para formatar o preço como moeda brasileira
+function formatarMoeda(valor) {
+    return valor.toFixed(2).replace('.', ',');
+}
+
+// 1. Função para Renderizar as Motos na Página
+function renderizarMotos() {
+    listaProdutos.innerHTML = ''; // Limpa antes de adicionar
+    motos.forEach(moto => {
+        const produtoCard = document.createElement('div');
+        produtoCard.classList.add('produto-card');
+        
+        produtoCard.innerHTML = `
+            <img src="${moto.imagem}" alt="${moto.nome}">
+            <h3>${moto.nome}</h3>
+            <p class="preco">R$ ${formatarMoeda(moto.preco)}</p>
+            <p>12x de R$ ${formatarMoeda(moto.preco / 12)}</p>
+            <button class="adicionar-carrinho" data-id="${moto.id}">QUERO ESSA MOTO!</button>
         `;
-        productList.appendChild(productCard);
+
+        listaProdutos.appendChild(produtoCard);
+    });
+
+    // Adiciona event listeners (ouvintes de evento) aos botões
+    document.querySelectorAll('.adicionar-carrinho').forEach(button => {
+        button.addEventListener('click', adicionarAoCarrinho);
     });
 }
 
-/**
- * Adiciona um produto ao carrinho.
- * @param {number} productId - O ID do produto a ser adicionado.
- */
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        const existingItem = cart.find(item => item.id === productId);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ ...product, quantity: 1 });
-        }
-        
-        updateCartDisplay();
-        alert(`${product.name} adicionada ao carrinho!`);
+// 2. Função para Adicionar uma Moto ao Carrinho (Lista de Interesse)
+function adicionarAoCarrinho(event) {
+    const motoId = parseInt(event.target.getAttribute('data-id'));
+    const moto = motos.find(m => m.id === motoId);
+    
+    if (moto) {
+        carrinho.push(moto);
+        atualizarCarrinhoInfo();
+        alert(`A moto "${moto.nome}" foi adicionada à sua lista de interesse. Entraremos em contato!`);
     }
 }
 
-/**
- * Remove um item do carrinho.
- * @param {number} productId - O ID do produto a ser removido.
- */
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartDisplay();
+// 3. Função para Atualizar a Contagem e o Total do Carrinho
+function atualizarCarrinhoInfo() {
+    const totalItens = carrinho.length;
+    
+    // Calcula o valor total (soma de todas as motos no carrinho)
+    const totalPreco = carrinho.reduce((total, moto) => total + moto.preco, 0);
+
+    // Atualiza o HTML
+    contadorCarrinho.textContent = totalItens;
+    totalCarrinho.textContent = formatarMoeda(totalPreco);
 }
 
-/**
- * Calcula o total do carrinho.
- * @returns {number} O valor total do carrinho.
- */
-function calculateTotal() {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-}
-
-/**
- * Atualiza a exibição do carrinho (ícone e pop-up).
- */
-function updateCartDisplay() {
-    // 1. Atualizar contagem no ícone do cabeçalho
-    const totalItems = cart.reduce((count, item) => count + item.quantity, 0);
-    cartCountSpan.textContent = totalItems;
-
-    // 2. Atualizar a lista de itens no pop-up do carrinho
-    cartItemsContainer.innerHTML = '';
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #666;">Seu carrinho está vazio.</p>';
-    } else {
-        cart.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.classList.add('cart-item');
-            itemDiv.innerHTML = `
-                <div class="item-info">
-                    <span>${item.name}</span>
-                    <span>Qtd: ${item.quantity} | R$ ${(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-                <button class="remove-item-btn" onclick="removeFromCart(${item.id})">Remover</button>
-            `;
-            cartItemsContainer.appendChild(itemDiv);
-        });
-    }
-
-    // 3. Atualizar o total
-    cartTotalSpan.textContent = calculateTotal().toFixed(2);
-}
-
-/**
- * Alterna a visibilidade do pop-up do carrinho.
- */
-function toggleCart() {
-    cartPopup.classList.toggle('open');
-}
-
-
-// Inicialização: Renderizar os produtos ao carregar a página
-document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    updateCartDisplay(); // Para garantir que a contagem inicial seja 0
-});
+// Inicialização: Renderiza as motos quando a página carrega
+document.addEventListener('DOMContentLoaded', renderizarMotos);

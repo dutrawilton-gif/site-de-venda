@@ -3,38 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BikeShop - A sua loja de bicicletas</title>
+    <title>Motor Shop - Sua Loja de Motos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>BikeShop</h1>
-        <div class="cart-icon" onclick="toggleCart()">
-            🛒 Carrinho (<span id="cart-count">0</span>)
+        <h1>Motor Shop</h1>
+        <p>Acelere seu sonho!</p>
+        <div id="carrinho-info">
+            Motos no Carrinho (<span id="contador-carrinho">0</span>) - Total: R$ <span id="total-carrinho">0,00</span>
         </div>
     </header>
 
     <main>
-        <h2>Nossas Bicicletas</h2>
-        <section id="product-list" class="product-list">
-            </section>
+        <h2>Modelos Disponíveis</h2>
+        <div id="lista-produtos" class="produtos">
+            </div>
     </main>
 
-    <div id="cart-popup" class="cart-popup">
-        <div class="cart-header">
-            <h3>Seu Carrinho</h3>
-            <span class="close-btn" onclick="toggleCart()">X</span>
-        </div>
-        <div id="cart-items">
-            </div>
-        <div class="cart-footer">
-            <p>Total: R$ <span id="cart-total">0.00</span></p>
-            <button>Finalizar Compra</button>
-        </div>
-    </div>
-
     <footer>
-        <p>&copy; 2024 BikeShop</p>
+        <p>&copy; 2025 Motor Shop. Todos os direitos reservados. Venda apenas para maiores de 18 anos com CNH válida.</p>
     </footer>
 
     <script src="script.js"></script>
