@@ -68,8 +68,8 @@ h2 {
 
 .produto-card img {
     width: 100%;
-    height: 200px; /* Altura fixa para as imagens */
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    height: 200px; 
+    object-fit: cover; 
     border-radius: 6px;
     margin-bottom: 15px;
 }
@@ -81,7 +81,7 @@ h2 {
 }
 
 .preco {
-    color: #008000; /* Verde para destacar o preço */
+    color: #008000; 
     font-weight: bold;
     font-size: 1.5em;
     margin: 15px 0;
